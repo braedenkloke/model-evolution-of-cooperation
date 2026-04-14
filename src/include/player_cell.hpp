@@ -32,13 +32,6 @@ class PlayerCell : public AsymmCell<playerState, double> {
                 state.total_payoff += state.p; // Punishment
             }
         }
-
-        // Remove payoff gained from this Prisoner playing against itself
-        if (state.cooperate) {
-            state.total_payoff -= state.r; // Reward
-        } else {
-            state.total_payoff -= state.p; // Punishment
-        }
 		return state;
 	}
 
