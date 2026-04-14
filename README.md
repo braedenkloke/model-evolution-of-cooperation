@@ -1,5 +1,5 @@
-# Spatialized Prisoner's Dilemma
-Model and simulation of the Prisoner's Dilemma as cellular automata in a grid cell space. Implemented with Cell-DEVS and Cadmium.
+# The Evolution of Cooperation
+Model and simulation of the [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner's_dilemma) as cellular automata in an asymmetric cell-space.
 
 ## Usage
 To build the model, run
@@ -27,6 +27,7 @@ For a detailed description of the project, see the [report](Report.pdf).
 ## Further Reading
 - [The Philosophical Computer: Exploratory Essays in Philosophical Computer Modeling](https://direct.mit.edu/books/monograph/5400/The-Philosophical-ComputerExploratory-Essays-in)
 - [The Evolution of Cooperation](https://en.wikipedia.org/wiki/The_Evolution_of_Cooperation)
+- [Asymmetric Cell-DEVS models with the Cadmium Simulator](https://www.sciencedirect.com/science/article/pii/S1569190X22001198)
 - [Cadmium and the DEVSsim Server](https://devssim.carleton.ca/): Two tools for discrete-event modeling and simulation.
 
 ## License
