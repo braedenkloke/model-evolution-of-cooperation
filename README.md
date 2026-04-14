@@ -1,6 +1,9 @@
 # The Evolution of Cooperation
 Model and simulation of the [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner's_dilemma) as cellular automata in an asymmetric cell-space.
 
+## Motivation
+To study how cooperation emerges in a society of selfish actors.
+
 ## Usage
 To build the model, run
 ```
@@ -28,7 +31,7 @@ For a detailed description of the project, see the [report](Report.pdf).
 - [The Philosophical Computer: Exploratory Essays in Philosophical Computer Modeling](https://direct.mit.edu/books/monograph/5400/The-Philosophical-ComputerExploratory-Essays-in)
 - [The Evolution of Cooperation](https://en.wikipedia.org/wiki/The_Evolution_of_Cooperation)
 - [Asymmetric Cell-DEVS models with the Cadmium Simulator](https://www.sciencedirect.com/science/article/pii/S1569190X22001198)
-- [Cadmium and the DEVSsim Server](https://devssim.carleton.ca/): Two tools for discrete-event modeling and simulation.
+- [Cadmium and the DEVSsim Server](https://devssim.carleton.ca/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
