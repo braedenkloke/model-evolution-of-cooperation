@@ -1,24 +1,11 @@
-#include <cadmium/modeling/celldevs/grid/coupled.hpp>
 #include <cadmium/simulation/logger/csv.hpp>
 #include <cadmium/simulation/root_coordinator.hpp>
 
 #include "include/player_cell.hpp"
+#include "include/player_coupled.hpp"
 
 using namespace cadmium::celldevs;
 using namespace cadmium;
-
-std::shared_ptr<GridCell<playerState, double>> addGridCell(
-        const coordinates & cellId, 
-        const std::shared_ptr<const GridCellConfig<playerState, double>>& cellConfig
-    ) {
-	auto cellModel = cellConfig->cellModel;
-
-	if (cellModel == "prisoners_dilemma") {
-		return std::make_shared<PlayerCell>(cellId, cellConfig);
-	} else {
-		throw std::bad_typeid();
-	}
-}
 
 int main(int argc, char ** argv) {
 	if (argc < 2) {
@@ -29,7 +16,7 @@ int main(int argc, char ** argv) {
 	std::string configFilePath = argv[1];
 	double simTime = (argc > 2)? std::stod(argv[2]) : 200;
 
-	auto model = std::make_shared<GridCellDEVSCoupled<playerState, double>>("prisoners_dilemma", addGridCell, configFilePath);
+	auto model = std::make_shared<GridCellDEVSCoupled<playerState, double>>("prisoners_dilemma", addPlayerCell, configFilePath);
 	model->buildModel();
 	
 	auto rootCoordinator = RootCoordinator(model);
