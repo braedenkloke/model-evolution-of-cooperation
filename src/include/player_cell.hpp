@@ -1,22 +1,22 @@
 #ifndef PLAYER_CELL_HPP
 #define PLAYER_CELL_HPP
 
-#include <cadmium/modeling/celldevs/grid/cell.hpp>
-#include <cadmium/modeling/celldevs/grid/config.hpp>
+#include <cadmium/modeling/celldevs/asymm/cell.hpp>
+#include <cadmium/modeling/celldevs/asymm/config.hpp>
 #include "player_state.hpp"
 
 using namespace cadmium::celldevs;
 
-class PlayerCell : public GridCell<playerState, double> {
+class PlayerCell : public AsymmCell<playerState, double> {
 
 	public:
-	PlayerCell(const std::vector<int>& id, 
-           const std::shared_ptr<const GridCellConfig<playerState, double>>& config
-    ): GridCell<playerState, double>(id, config) { }
+	PlayerCell(const std::string& id, 
+               const std::shared_ptr<const AsymmCellConfig<playerState, double>>& config
+    ): AsymmCell<playerState, double>(id, config) { }
 
 	[[nodiscard]] playerState localComputation(
         playerState state,
-        const std::unordered_map<std::vector<int>, NeighborData<playerState, double>>& neighborhood
+        const std::unordered_map<std::string, NeighborData<playerState, double>>& neighborhood
     ) const override {
         // Play the Prisoner's Dilemma with each neighbor, 
         // Prisoner's are assumed to be neighbors of themselves

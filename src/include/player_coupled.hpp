@@ -1,11 +1,11 @@
 #ifndef PLAYER_COUPLED_HPP
 #define PLAYER_COUPLED_HPP
 
-#include <cadmium/modeling/celldevs/grid/coupled.hpp>
+#include <cadmium/modeling/celldevs/asymm/coupled.hpp>
 
-std::shared_ptr<GridCell<playerState, double>> addPlayerCell(
-        const coordinates & cellId, 
-        const std::shared_ptr<const GridCellConfig<playerState, double>>& cellConfig
+std::shared_ptr<AsymmCell<playerState, double>> addPlayerCell(
+        const std::string& cellId, 
+        const std::shared_ptr<const AsymmCellConfig<playerState, double>>& cellConfig
     ) {
 	auto cellModel = cellConfig->cellModel;
 

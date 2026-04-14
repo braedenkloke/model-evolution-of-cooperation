@@ -16,7 +16,11 @@ int main(int argc, char ** argv) {
 	std::string configFilePath = argv[1];
 	double simTime = (argc > 2)? std::stod(argv[2]) : 200;
 
-	auto model = std::make_shared<GridCellDEVSCoupled<playerState, double>>("prisoners_dilemma", addPlayerCell, configFilePath);
+	auto model = std::make_shared<AsymmCellDEVSCoupled<playerState, double>>(
+        "prisoners_dilemma", 
+        addPlayerCell, 
+        configFilePath
+    );
 	model->buildModel();
 	
 	auto rootCoordinator = RootCoordinator(model);
