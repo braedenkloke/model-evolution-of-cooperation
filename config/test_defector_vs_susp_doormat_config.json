@@ -5,16 +5,16 @@
           "model": "prisoners_dilemma",
           "state": { "cooperate": true }
         },
-        "c1": {
+        "(0,0)": {
             "state": { "cooperate": true },
             "neighborhood": {
-                "c2": 1.0
+                "(0,1)": 1.0
             }
         },
-        "c2": {
+        "(0,1)": {
             "state": { "cooperate": true },
             "neighborhood": {
-                "c1": 1.0
+                "(0,0)": 1.0
             }
         }
     }
