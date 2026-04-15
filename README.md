@@ -12,12 +12,12 @@ source build.sh
 
 To execute an experiment or test, run
 ```
-./bin/prisoners_dilemma config/<config_file>
+./bin/prisoners_dilemma config/<filename>_config.json
 ```
 
 Output is logged to
 ```
-grid_log.csv
+out/<filename>_log.csv
 ```
 
 To visualize the output, upload the files `<config_file>` and `grid_log.csv` to the [DEVS Web Viewer](https://devssim.carleton.ca/cell-devs-viewer/).
