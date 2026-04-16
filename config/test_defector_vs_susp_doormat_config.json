@@ -2,17 +2,22 @@
     "cells": {
         "default": {
           "delay": "inertial",
-          "model": "prisoners_dilemma",
-          "state": { "cooperate": false }
+          "model": "prisoners_dilemma"
         },
         "defector": {
-            "state": { "cooperate": false },
+            "state": { 
+                "cooperate": false,
+                "strategy": 0
+            },
             "neighborhood": {
                 "susp_doormat": 1.0
             }
         },
         "susp_doormat": {
-            "state": { "cooperate": true },
+            "state": { 
+                "cooperate": true,
+                "strategy": 1
+            },
             "neighborhood": {
                 "defector": 1.0
             }

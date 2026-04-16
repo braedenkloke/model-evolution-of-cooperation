@@ -20,15 +20,21 @@ class PlayerCell : public AsymmCell<playerState, double> {
     ) const override {
         // Play the Prisoner's Dilemma with each neighbor, 
 		for (const auto& [neighborId, neighborData]: neighborhood) {
+            bool a, b;
 			auto nState = neighborData.state;
-            if (state.cooperate == true && nState->cooperate == true) {
-                state.total_payoff += state.r; // Reward
-            } else if (state.cooperate == true && nState->cooperate == false) {
-                state.total_payoff += state.s; // Sucker's payoff
-            } else if (state.cooperate == false && nState->cooperate == true) {
-                state.total_payoff += state.t; // Temptation payoff
+
+            // Get moves for each player
+            a = state.initialMove;
+            b = nState->initialMove;
+
+            if (a == true && b == true) {
+                state.totalPayoff += state.r; // Reward payoff
+            } else if (a == true && b == false) {
+                state.totalPayoff += state.s; // Sucker's payoff
+            } else if (a == false && b == true) {
+                state.totalPayoff += state.t; // Temptation payoff
             } else {
-                state.total_payoff += state.p; // Punishment
+                state.totalPayoff += state.p; // Punishment payoff
             }
         }
         state.count += 1;
