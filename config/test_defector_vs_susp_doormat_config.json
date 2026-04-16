@@ -3,18 +3,18 @@
         "default": {
           "delay": "inertial",
           "model": "prisoners_dilemma",
-          "state": { "cooperate": true }
+          "state": { "cooperate": false }
         },
-        "(0,0)": {
-            "state": { "cooperate": true },
+        "defector": {
+            "state": { "cooperate": false },
             "neighborhood": {
-                "(0,1)": 1.0
+                "susp_doormat": 1.0
             }
         },
-        "(0,1)": {
+        "susp_doormat": {
             "state": { "cooperate": true },
             "neighborhood": {
-                "(0,0)": 1.0
+                "defector": 1.0
             }
         }
     }

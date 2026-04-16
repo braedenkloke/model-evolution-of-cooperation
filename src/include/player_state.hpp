@@ -5,12 +5,13 @@
 #include <nlohmann/json.hpp>
 
 struct playerState {
-	bool cooperate; // True if prisoner cooperates, false if prisoner defects.
+	bool cooperate;     // True if prisoner cooperates, false if prisoner defects.
     int total_payoff;
-    int r, s, t, p; // Payoff matrix
+    int r, s, t, p;     // Payoff matrix
+    int count;          // Gurantees state always changes, simulation terminates if state doesn't change
 
 	// Default constructor function.
-	playerState() : cooperate(false), total_payoff(0), r(3), s(0), t(5), p(1) {}
+	playerState() : cooperate(false), total_payoff(0), r(3), s(0), t(5), p(1), count(0) {}
 };
 
 // Prints the prisoner's state in an output stream.
@@ -21,7 +22,7 @@ std::ostream& operator<<(std::ostream& os, const playerState& x) {
 
 // The simulator must be able to compare the equality of two state objects
 bool operator!=(const playerState& x, const playerState& y) {
-	return x.total_payoff != y.total_payoff;
+	return x.cooperate != y.cooperate || x.total_payoff != y.total_payoff || x.count != y.count;
 }
 
 // It parses a JSON file and generates the corresponding playerState object.

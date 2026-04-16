@@ -19,7 +19,6 @@ class PlayerCell : public AsymmCell<playerState, double> {
         const std::unordered_map<std::string, NeighborData<playerState, double>>& neighborhood
     ) const override {
         // Play the Prisoner's Dilemma with each neighbor, 
-        // Prisoner's are assumed to be neighbors of themselves
 		for (const auto& [neighborId, neighborData]: neighborhood) {
 			auto nState = neighborData.state;
             if (state.cooperate == true && nState->cooperate == true) {
@@ -32,6 +31,7 @@ class PlayerCell : public AsymmCell<playerState, double> {
                 state.total_payoff += state.p; // Punishment
             }
         }
+        state.count += 1;
 		return state;
 	}
 
