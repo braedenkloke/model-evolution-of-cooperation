@@ -51,13 +51,13 @@ class PlayerCell : public AsymmCell<playerState, double> {
             // Plan next move based on opponent's move
             bool opponentCooperates = b;
             bool reaction = true;
-            if (state.strategy == kDefector) {
+            if (state.strategy == kDefector || state.strategy == kDeceptiveDefector) {
                 reaction = false;
-            } else if (state.strategy == kSuspDoormat) {
+            } else if (state.strategy == kSuspDoormat || state.strategy == kGullibleDoormat) {
                 if (opponentCooperates) {
                     reaction = false;
                 } 
-            } else if (state.strategy == kSuspTFT) {
+            } else if (state.strategy == kSuspTFT || state.strategy == kTFT) {
                 if (!opponentCooperates) {
                     reaction = false;
                 } 

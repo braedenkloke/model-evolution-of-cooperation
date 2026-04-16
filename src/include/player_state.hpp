@@ -8,7 +8,11 @@ enum Strategy {
     kDefector = 0,
     kSuspDoormat = 1,
     kSuspTFT = 2,
-    kSuspCooperator = 3
+    kSuspCooperator = 3,
+    kDeceptiveDefector = 4,
+    kGullibleDoormat = 5,
+    kTFT = 6,
+    kCooperator = 7
 };
 
 struct playerState {
@@ -43,6 +47,8 @@ void from_json(const nlohmann::json& j, playerState& s) {
 	j.at("strategy").get_to(s.strategy);
     if (s.strategy == kDefector || s.strategy == kSuspDoormat || s.strategy == kSuspTFT || s.strategy == kSuspCooperator) {
         s.initialMove = false;
+    } else {
+        s.initialMove = true;
     }
 }
 

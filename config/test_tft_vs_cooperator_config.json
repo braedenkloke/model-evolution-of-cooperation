@@ -1,0 +1,24 @@
+{
+    "cells": {
+        "default": {
+          "delay": "inertial",
+          "model": "prisoners_dilemma"
+        },
+        "tft": {
+            "state": { 
+                "strategy": 6
+            },
+            "neighborhood": {
+                "cooperator": 1.0
+            }
+        },
+        "cooperator": {
+            "state": { 
+                "strategy": 7
+            },
+            "neighborhood": {
+                "tft": 1.0
+            }
+        }
+    }
+}

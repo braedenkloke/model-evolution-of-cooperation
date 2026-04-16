@@ -1,0 +1,24 @@
+{
+    "cells": {
+        "default": {
+          "delay": "inertial",
+          "model": "prisoners_dilemma"
+        },
+        "deceptive_defector": {
+            "state": { 
+                "strategy": 4
+            },
+            "neighborhood": {
+                "gullible_doormat": 1.0
+            }
+        },
+        "gullible_doormat": {
+            "state": { 
+                "strategy": 5
+            },
+            "neighborhood": {
+                "deceptive_defector": 1.0
+            }
+        }
+    }
+}
