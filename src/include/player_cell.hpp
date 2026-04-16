@@ -18,14 +18,25 @@ class PlayerCell : public AsymmCell<playerState, double> {
         playerState state,
         const std::unordered_map<std::string, NeighborData<playerState, double>>& neighborhood
     ) const override {
-        // Play the Prisoner's Dilemma with each neighbor, 
+        // Play the Prisoner's Dilemma with each neighbor
 		for (const auto& [neighborId, neighborData]: neighborhood) {
             bool a, b;
 			auto nState = neighborData.state;
 
-            // Get moves for each player
-            a = state.initialMove;
-            b = nState->initialMove;
+            // Player A gets next move to make against Player B
+            if (state.moves.contains(nState->id)) {
+                a = state.moves[nState->id];
+            } else {
+                a = state.initialMove;
+            } 
+
+            // Player B gets next move to make against Player A
+            if (nState->moves.contains(state.id)) {
+                auto nMoves = nState->moves;
+                b = nMoves[state.id];
+            } else {
+                b = nState->initialMove;
+            }
 
             if (a == true && b == true) {
                 state.totalPayoff += state.r; // Reward payoff
@@ -36,6 +47,22 @@ class PlayerCell : public AsymmCell<playerState, double> {
             } else {
                 state.totalPayoff += state.p; // Punishment payoff
             }
+            
+            // Plan next move based on opponent's move
+            bool opponentCooperates = b;
+            bool reaction = true;
+            if (state.strategy == kDefector) {
+                reaction = false;
+            } else if (state.strategy == kSuspDoormat) {
+                if (opponentCooperates) {
+                    reaction = false;
+                } 
+            } else if (state.strategy == kSuspTFT) {
+                if (!opponentCooperates) {
+                    reaction = false;
+                } 
+            } 
+            state.moves[nState->id] = reaction;
         }
         state.count += 1;
 		return state;

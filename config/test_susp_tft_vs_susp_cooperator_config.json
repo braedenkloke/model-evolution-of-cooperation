@@ -4,20 +4,20 @@
           "delay": "inertial",
           "model": "prisoners_dilemma"
         },
-        "defector": {
+        "susp_tft": {
             "state": { 
-                "strategy": 0
+                "strategy": 2
             },
             "neighborhood": {
-                "susp_doormat": 1.0
+                "susp_cooperator": 1.0
             }
         },
-        "susp_doormat": {
+        "susp_cooperator": {
             "state": { 
-                "strategy": 1
+                "strategy": 3
             },
             "neighborhood": {
-                "defector": 1.0
+                "susp_tft": 1.0
             }
         }
     }
