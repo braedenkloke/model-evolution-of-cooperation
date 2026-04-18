@@ -1,41 +1,18 @@
 {
     "scenario": {
-        "shape": [2, 2],
-        "origin": [0, 0],
-        "wrapped": false
+        "shape": [1, 1],
+        "origin": [0, 0]
      },
     "cells": {
         "default": {
           "delay": "inertial",
-          "model": "prisoners_dilemma",
-          "state": { "strategy": 8 }
+          "model": "prisoners_dilemma"
         },
         "(0,0)": {
             "state": { "strategy": 0 },
             "neighborhood": {
-                "(0,1)": 1.0
-            }
-        },
-        "(0,1)": {
-            "state": { "strategy": 1 },
-            "neighborhood": {
-                "(0,0)": 1.0
-            }
-        },
-        "(1,0)": {
-            "state": { "strategy": 2 },
-            "neighborhood": {
-                "(0,0)": 1.0
-            }
-        },
-        "(1,1)": {
-            "state": { "strategy": 3 },
-            "neighborhood": {
-                "(0,0)": 1.0
             }
         }
-
-
     },
     "viewer": [
             {
