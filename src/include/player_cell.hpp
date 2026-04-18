@@ -1,6 +1,8 @@
 #ifndef PLAYER_CELL_HPP
 #define PLAYER_CELL_HPP
 
+#include <cassert>
+
 #include <cadmium/modeling/celldevs/asymm/cell.hpp>
 #include <cadmium/modeling/celldevs/asymm/config.hpp>
 #include "player_state.hpp"
@@ -22,6 +24,7 @@ class PlayerCell : public AsymmCell<playerState, double> {
 		for (const auto& [neighborId, neighborData]: neighborhood) {
             bool a, b;
 			auto nState = neighborData.state;
+            assert(nState->strategy != kNull);
 
             // Player A gets next move to make against Player B
             if (state.moves.contains(nState->id)) {
@@ -47,7 +50,7 @@ class PlayerCell : public AsymmCell<playerState, double> {
             } else {
                 state.totalPayoff += state.p; // Punishment payoff
             }
-            
+
             // Plan next move based on opponent's move
             bool opponentCooperates = b;
             bool reaction = true;
@@ -64,7 +67,16 @@ class PlayerCell : public AsymmCell<playerState, double> {
             } 
             state.moves[nState->id] = reaction;
         }
-        state.count += 1;
+
+        // After playing each neighbor, determine best strategy among them
+        int max = state.totalPayoff;
+        for (const auto& [nId, nData]: neighborhood) {
+            auto nState = nData.state;
+            if (nState->totalPayoff > max) {
+                max = nState->totalPayoff;
+                state.bestStrategy = nState->strategy;
+            }
+        }
 		return state;
 	}
 
