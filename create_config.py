@@ -19,7 +19,13 @@ if __name__ == "__main__":
         type=int,
         default=[0, 1, 2, 3, 4, 5, 6, 7]
     )
+    cli.add_argument(
+        '-p',
+        '--tft_penalty',
+        action='store_true',
+        default=False
+    )
     args = cli.parse_args()
 
-    config_fp = io_helper.create_config(args.out_filename, args.n, args.strategies)
+    config_fp = io_helper.create_config(args.out_filename, args.n, args.strategies, args.tft_penalty)
     print("Config created: " + config_fp)

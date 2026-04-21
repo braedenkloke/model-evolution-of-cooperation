@@ -15,6 +15,7 @@ REDDISH_PURPLE = [204, 121, 167]
 WHITE = [255, 255, 255]
 
 # Strategies
+TFT_STRATEGY = 6
 NULL_STRATEGY = 8
 
 # I/O constants
@@ -58,7 +59,7 @@ CONFIG_TEMPLATE = {
         ]
     }
 
-def create_config(out_filename: str, n_dimension: int, strategies: list):
+def create_config(out_filename: str, n_dimension: int, strategies: list, tft_penalty=False):
     """
     Creates a config file for an n-by-n matrix cell space.
 
@@ -97,6 +98,9 @@ def create_config(out_filename: str, n_dimension: int, strategies: list):
 
     # Clean up cell space; remove cells with no strategy from neighborhoods
     remove_cells_with_no_strategy(cells)
+
+    if tft_penalty:
+        penalize_tft(cells, strategies)
 
     config_fp = build_config_filepath(out_filename)
     with open(config_fp, 'w') as f:
@@ -164,7 +168,7 @@ def remove_cells_with_no_strategy(cells: dict):
     # Remove neighborhoods of cells with no strategies
     for c, d in cells.items():
         if c != 'default' and d.get('state').get('strategy') == NULL_STRATEGY:
-            del d['neighborhood']
+            d['neighborhood'] = dict()
             cell_names_with_no_strategies.add(c)
 
     # Remove cells with no strategies from their neighbors' neighborhoods
@@ -173,6 +177,18 @@ def remove_cells_with_no_strategy(cells: dict):
             for n in cell_names_with_no_strategies:
                 if n in d['neighborhood']:
                     del d['neighborhood'][n]
+
+def penalize_tft(cells: dict, strategies: list, neighborhood_size=4):
+    strategies = strategies.copy()
+
+    if TFT_STRATEGY in strategies:
+        strategies.remove(TFT_STRATEGY)
+        strategies.remove(NULL_STRATEGY)
+
+        for c, d in cells.items():
+            if c != 'default':
+                if d['state']['strategy'] == TFT_STRATEGY and len(d['neighborhood']) > neighborhood_size:
+                    d['state']['strategy'] = random_strategy(strategies)
 
 
 def update_config(log_fp, config_fp, out_filename):

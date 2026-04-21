@@ -1,8 +1,7 @@
 #!/bin/bash
-#
-# Case 1: All strategies, including no strategy
 
-base_filename='experiment_case_1'
+#base_filename='experiment_case_1'
+base_filename='experiment_case_2'
 n_dimension=64
 max_runs=12
 init_run_id=00
@@ -19,16 +18,20 @@ while getopts "i:f:n:m:" opt; do
 done
 
 # Build simulator
-#./build.sh
+./build.sh
 
 for i in $(eval echo {$init_run_id..$max_runs}); do
     echo "Starting simulation ${i#0} / ${max_runs} ..."
     config_fp=config/${base_filename}_${i}_config.json
 
+    # Case when starting experiments midway
+    if (( ${prev_id#0} < 0)) && ((${init_run_id#0} > 0)); then
+        prev_id=$(( ${init_run_id#0} - 1 ))
+    fi
+
     # Create initial config or update existing config
     if (( ${init_run_id#0} == 0 )) && (( ${prev_id#0} < 0)); then 
-        python3 create_config.py $config_fp -n ${n_dimension} -s {0..8}
-        exit # Tmp
+        python3 create_config.py $config_fp -n ${n_dimension} -s {0..8} -p
     else
         python3 update_config.py out/${base_filename}_${prev_id}_log.csv config/${base_filename}_${prev_id}_config.json $config_fp
     fi
