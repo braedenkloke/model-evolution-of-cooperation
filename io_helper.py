@@ -14,6 +14,9 @@ VERMILLION = [213, 94, 0]
 REDDISH_PURPLE = [204, 121, 167]
 WHITE = [255, 255, 255]
 
+# Strategies
+NULL_STRATEGY = 8
+
 # I/O constants
 CONFIG_FILE_SUFFIX = "_config.json"
 CONFIG_DIR = "config/"
@@ -92,6 +95,9 @@ def create_config(out_filename: str, n_dimension: int, strategies: list):
             }
             cells.update(cell)
 
+    # Clean up cell space; remove cells with no strategy from neighborhoods
+    remove_cells_with_no_strategy(cells)
+
     config_fp = build_config_filepath(out_filename)
     with open(config_fp, 'w') as f:
         json.dump(config, f, indent=2)
@@ -152,6 +158,23 @@ def build_config_filepath(filename):
 
     return config_fp
 
+def remove_cells_with_no_strategy(cells: dict):
+    cell_names_with_no_strategies = set()
+
+    # Remove neighborhoods of cells with no strategies
+    for c, d in cells.items():
+        if c != 'default' and d.get('state').get('strategy') == NULL_STRATEGY:
+            del d['neighborhood']
+            cell_names_with_no_strategies.add(c)
+
+    # Remove cells with no strategies from their neighbors' neighborhoods
+    for c, d in cells.items():
+        if c != 'default' and c not in cell_names_with_no_strategies:
+            for n in cell_names_with_no_strategies:
+                if n in d['neighborhood']:
+                    del d['neighborhood'][n]
+
+
 def update_config(log_fp, config_fp, out_filename):
     log_delimiter = ";"
     cell_name_index = 2
@@ -159,7 +182,6 @@ def update_config(log_fp, config_fp, out_filename):
     best_strategy_index = 1
     best_strategy_by_cell_name = dict()
 
-    
     # Read log; get best strategies for each cell
     with open(log_fp, newline="") as log:
         log_reader = csv.reader(log, delimiter=log_delimiter)

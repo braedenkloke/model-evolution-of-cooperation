@@ -19,7 +19,7 @@ while getopts "i:f:n:m:" opt; do
 done
 
 # Build simulator
-./build.sh
+#./build.sh
 
 for i in $(eval echo {$init_run_id..$max_runs}); do
     echo "Starting simulation ${i#0} / ${max_runs} ..."
