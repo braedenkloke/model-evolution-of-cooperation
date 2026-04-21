@@ -1,6 +1,8 @@
 #!/bin/bash
+#
+# Case 1: All strategies, including no strategy
 
-base_filename='test_validation_iter'
+base_filename='experiment_case_1'
 n_dimension=64
 max_runs=12
 init_run_id=00
@@ -25,7 +27,8 @@ for i in $(eval echo {$init_run_id..$max_runs}); do
 
     # Create initial config or update existing config
     if (( ${init_run_id#0} == 0 )) && (( ${prev_id#0} < 0)); then 
-        python3 create_config.py $config_fp -n ${n_dimension}
+        python3 create_config.py $config_fp -n ${n_dimension} -s {0..8}
+        exit # Tmp
     else
         python3 update_config.py out/${base_filename}_${prev_id}_log.csv config/${base_filename}_${prev_id}_config.json $config_fp
     fi

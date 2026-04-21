@@ -55,7 +55,7 @@ CONFIG_TEMPLATE = {
         ]
     }
 
-def create_config(out_filename: str, n_dimension: int):
+def create_config(out_filename: str, n_dimension: int, strategies: list):
     """
     Creates a config file for an n-by-n matrix cell space.
 
@@ -84,7 +84,7 @@ def create_config(out_filename: str, n_dimension: int):
         for j in range(n):
             cell_id = f"({i},{j})"
             neighborhood = get_neighborhood(i, j, m, n)
-            strategy = random_strategy()
+            strategy = random_strategy(strategies)
             cell = { cell_id: {
                     "state": { "strategy": strategy },
                     "neighborhood": neighborhood
@@ -134,8 +134,9 @@ def get_neighborhood(x, y, m, n, type = "von_neumann", r = 1):
 
     return neighborhood
 
-def random_strategy():
-    return random.randrange(0,8)
+def random_strategy(strategies: list):
+    i = random.randrange(0, len(strategies))
+    return strategies[i]
 
 def build_config_filepath(filename):
     """
