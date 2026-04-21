@@ -24,58 +24,66 @@ class PlayerCell : public AsymmCell<playerState, double> {
 		for (const auto& [neighborId, neighborData]: neighborhood) {
             bool a, b;
 			auto nState = neighborData.state;
-            assert(nState->strategy != kNull);
+            assert(nState->strategy != kNull); // Assume cells never play an opponent with no strategy
 
-            // Player A gets next move to make against Player B
-            if (state.moves.contains(nState->id)) {
-                a = state.moves[nState->id];
-            } else {
-                a = state.initialMove;
-            } 
-
-            // Player B gets next move to make against Player A
-            if (nState->moves.contains(state.id)) {
-                auto nMoves = nState->moves;
-                b = nMoves[state.id];
-            } else {
-                b = nState->initialMove;
-            }
-
-            if (a == true && b == true) {
-                state.totalPayoff += state.r; // Reward payoff
-            } else if (a == true && b == false) {
-                state.totalPayoff += state.s; // Sucker's payoff
-            } else if (a == false && b == true) {
-                state.totalPayoff += state.t; // Temptation payoff
-            } else {
-                state.totalPayoff += state.p; // Punishment payoff
-            }
-
-            // Plan next move based on opponent's move
-            bool opponentCooperates = b;
-            bool reaction = true;
-            if (state.strategy == kDefector || state.strategy == kDeceptiveDefector) {
-                reaction = false;
-            } else if (state.strategy == kSuspDoormat || state.strategy == kGullibleDoormat) {
-                if (opponentCooperates) {
-                    reaction = false;
+            // Ignore yourself in your neighborhood, i.e., never play against yourself
+            if (nState->id != state.id) {
+                // Player A gets next move to make against Player B
+                if (state.moves.contains(nState->id)) {
+                    a = state.moves[nState->id];
+                } else {
+                    a = state.initialMove;
                 } 
-            } else if (state.strategy == kSuspTFT || state.strategy == kTFT) {
-                if (!opponentCooperates) {
+
+                // Player B gets next move to make against Player A
+                if (nState->moves.contains(state.id)) {
+                    auto nMoves = nState->moves;
+                    b = nMoves[state.id];
+                } else {
+                    b = nState->initialMove;
+                }
+
+                if (a == true && b == true) {
+                    state.totalPayoff += state.r; // Reward payoff
+                } else if (a == true && b == false) {
+                    state.totalPayoff += state.s; // Sucker's payoff
+                } else if (a == false && b == true) {
+                    state.totalPayoff += state.t; // Temptation payoff
+                } else {
+                    state.totalPayoff += state.p; // Punishment payoff
+                }
+
+                // Plan next move based on opponent's move
+                bool opponentCooperates = b;
+                bool reaction = true;
+                if (state.strategy == kDefector || state.strategy == kDeceptiveDefector) {
                     reaction = false;
+                } else if (state.strategy == kSuspDoormat || state.strategy == kGullibleDoormat) {
+                    if (opponentCooperates) {
+                        reaction = false;
+                    } 
+                } else if (state.strategy == kSuspTFT || state.strategy == kTFT) {
+                    if (!opponentCooperates) {
+                        reaction = false;
+                    } 
                 } 
-            } 
-            state.moves[nState->id] = reaction;
+                state.moves[nState->id] = reaction;
+            }
         }
 
         // After playing each neighbor, determine best strategy among them
         int max = state.totalPayoff;
+        bool foundBetterStrategy = false;
         for (const auto& [nId, nData]: neighborhood) {
             auto nState = nData.state;
             if (nState->totalPayoff > max) {
                 max = nState->totalPayoff;
                 state.bestStrategy = nState->strategy;
-            }
+                foundBetterStrategy = true;
+            } 
+        }
+        if (!foundBetterStrategy) {
+            state.bestStrategy = state.strategy;
         }
 		return state;
 	}

@@ -5,3 +5,10 @@ lib/
 # Vim
 *.swp
 
+# Python
+__pycache__
+
+# Test files
+config/test_validation*
+out/test_validation*
+
