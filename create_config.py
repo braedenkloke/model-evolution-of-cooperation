@@ -1,17 +1,25 @@
-import sys
+import argparse
 
 import io_helper
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        print("Error: Missing output file name")
-        exit(1)
-    if len(sys.argv) == 2: 
-        print("Error: Missing n-dimension for n-by-n matrix")
-        exit(1)
+    cli = argparse.ArgumentParser()
+    cli.add_argument(
+        'out_filename'
+    )
+    cli.add_argument(
+        '-n',
+        type=int,
+        default=64
+    )
+    cli.add_argument(
+        '-s', 
+        '--strategies',
+        nargs='*',
+        type=int,
+        default=[0, 1, 2, 3, 4, 5, 6, 7]
+    )
+    args = cli.parse_args()
 
-    out_filename = sys.argv[1]
-    n_dimension = sys.argv[2]
-
-    config_fp = io_helper.create_config(out_filename, int(n_dimension))
+    config_fp = io_helper.create_config(args.out_filename, args.n, args.strategies)
     print("Config created: " + config_fp)
