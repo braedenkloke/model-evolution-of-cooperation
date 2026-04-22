@@ -26,7 +26,7 @@ The scripts are:
 
 To visualize the output, upload the files `<filename>_config.json` and `<filename>_log.csv` to the [Cell-DEVS Web Viewer](https://devssim.carleton.ca/cell-devs-viewer/).
 
-For a detailed description of the project, see the [report](Report.pdf). Experimental results and animations from the report can be in `experiments/`.
+For a detailed description of the project, see the [report](Report.pdf). Experimental results and animations mentioned in the report can be in [experiments](/experiments).
 
 ## Requirements
 * [Cadmium v2](https://github.com/Sasisekhar/cadmium_v2) 
