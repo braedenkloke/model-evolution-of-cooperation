@@ -1,9 +1,6 @@
 # The Evolution of Cooperation
 Model and simulation of the [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner's_dilemma) as cellular automata in an asymmetric cell-space.
 
-## Motivation
-To study how cooperation emerges in a society of selfish actors.
-
 ## Usage
 To build the model, run
 ```
@@ -20,7 +17,14 @@ Output is logged to
 out/<filename>_log.csv
 ```
 
-To visualize the output, upload the files `<config_file>` and `grid_log.csv` to the [DEVS Web Viewer](https://devssim.carleton.ca/cell-devs-viewer/).
+The scripts are:
+* `create_config.py`: Creates a configuration compatible with the Cell-DEVS Web Viewer.
+* `run_experiment.sh`: Creates a configuration and runs a set number of experiments.
+* `run_tests.sh`: Runs units tests.
+* `run_validation.sh`: Runs validation test.
+* `update_config.py`: Given a log and a configuration file, updates the configuration file with the best strategies from the log.
+
+To visualize the output, upload the files `<filename>_config.json` and `<filename>_log.csv` to the [Cell-DEVS Web Viewer](https://devssim.carleton.ca/cell-devs-viewer/).
 
 For a detailed description of the project, see the [report](Report.pdf).
 
